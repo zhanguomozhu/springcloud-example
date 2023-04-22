@@ -1,0 +1,56 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+   #seata1.5.1版本以下
+    alibaba:
+      seata:
+        #自定义事务组名称需要与seata-server中的对应
+        tx-service-group: default_tx_group
+    nacos: #nacos 1.14
+      discovery:
+        server-addr: 192.168.2.110:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.2.110:3306/seata_order?useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+    username: root
+    password: root
+
+
+##seata1.5.2版本
+#seata:
+#  enable: true
+#  application-id: seata-cilent-order
+#  tx-service-group: default_tx_group
+#  registry:
+#    type: nacos
+#    nacos:
+#      application: seata-server # seata 服务名
+#      # 非本地请修改具体的地址
+#      server-addr: http://192.168.2.110:8848
+#      group: SEATA_GROUP
+#  config:
+#    type: nacos
+#    nacos:
+#      # nacos ip地址
+#      server-addr: http://192.168.2.110:8848
+#      group: SEATA_GROUP
+#      data-id: "seataServer.properties"
+
+
+feign:
+  hystrix:
+    enabled: false
+
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  typeAliasesPackage: com.dyq.springcloud.seata.order.service2001.entity
+  mapperLocations: classpath:mapper/*.xml
+

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dyq.springcloud</groupId>
+    <artifactId>springcloud-example</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <!-- 统一管理jar包版本 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <junit.version>4.12</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.18.20</lombok.version>
+        <mysql.version>5.1.47</mysql.version>
+        <druid.version>1.2.4</druid.version>
+        <mybatis.version>2.3.0</mybatis.version>
+        <data.common.version>2.2.2.RELEASE</data.common.version>
+        <pagehelper.version>5.1.8</pagehelper.version>
+        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR1</spring.cloud.version>
+        <spring.cloud.alibaba.version>2.2.0.RELEASE</spring.cloud.alibaba.version>
+        <commons.version>0.0.1-SNAPSHOT</commons.version>
+        <hutool.version>5.1.0</hutool.version>
+        <seata.version>1.5.2</seata.version>
+    </properties>
+
+    <!-- 子模块继承之后，提供作用：
+		锁定版本+子modlue不用写groupId和version -->
+    <dependencyManagement>
+        <dependencies>
+            <!--spring boot 2.2.2-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--查看springboot版本支持的springcloud版本：https://start.spring.io/actuator/info-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring-cloud-alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${data.common.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.dyq.springcloud</groupId>
+                <artifactId>springcloud-api-commons</artifactId>
+                <version>${commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${seata.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                低版本热加载需要配置-->
+<!--                <configuration>-->
+<!--                    <fork>true</fork>-->
+<!--                    <addResources>true</addResources>-->
+<!--                </configuration>-->
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <!--    公共接口模块    -->
+        <module>springcloud-api-commons</module>
+        <!--    支付模块8001    -->
+        <module>springcloud-provider-payment-8001</module>
+        <!--    消费者订单模块80    -->
+        <module>springcloud-consumer-order-80</module>
+        <!--    eureka服务模块7001    -->
+        <module>springcloud-eureka-server-7001</module>
+        <!--    eureka服务模块7002    -->
+        <module>springcloud-eureka-server-7002</module>
+        <!--    支付模块8002    -->
+        <module>springcloud-provider-payment-8002</module>
+        <!--    支付模块zookeeper注册中心8004    -->
+        <module>springcloud-provider-zk-payment-8004</module>
+        <!--    消费者订单模块zookeeper注册中心81    -->
+        <module>springcloud-consumer-zk-order-81</module>
+        <!--    支付模块consul注册中心8006    -->
+        <module>springcloud-provider-consul-payment-8006</module>
+        <!--    消费者订单模块consul注册中心82    -->
+        <module>springcloud-consumer-consul-order-82</module>
+        <!--    消费者订单模块Ribbon负载均衡83    -->
+        <module>springcloud-consumer-ribbon-order-83</module>
+        <!--    消费者订单模块openfeign服务调用84    -->
+        <module>springcloud-consumer-openfeign-order-84</module>
+        <!--    支付模块hygtrix熔断8007    -->
+        <module>springcloud-provider-hygtrix-payment-8007</module>
+        <!--    消费者订单模块hygtrix服务熔断降级调用85    -->
+        <module>springcloud-consumer-hygtrix-order-85</module>
+        <!--    hygtrix仪表盘监控平台9001    -->
+        <module>springcloud-consumer-hygtrix-dashboard-9001</module>
+        <!--    gateway网关9527    -->
+        <module>springcloud-gateway-9527</module>
+        <!--    config配置中心3344    -->
+        <module>springcloud-config-3344</module>
+        <!--    config配置中心3355-获取3344    -->
+        <module>springcloud-config-3355</module>
+        <!--    config配置中心3366-bus消息总线    -->
+        <module>springcloud-config-3366</module>
+        <!--    stream消息驱动生产者rabbitmq-8801  -->
+        <module>springcloud-stream-provider-rabbitmq-8801</module>
+        <!--    stream消息驱动消费者rabbitmq-8802  -->
+        <module>springcloud-stream-consumer-rabbitmq-8802</module>
+        <!--    stream消息驱动消费者rabbitmq-8803  -->
+        <module>springcloud-stream-consumer-rabbitmq-8803</module>
+        <!--    支付模块sleuth+zipkin链路监控8009    -->
+        <module>springcloud-provider-sleuth-payment-8009</module>
+        <!--    消费者订单模块sleuth+zipkin链路监控85    -->
+        <module>springcloud-consumer-sleuth-order-85</module>
+        <!--    支付模块nacos注册中心生产者9001    -->
+        <module>springcloud-alibaba-provider-nacos-payment-9001</module>
+        <!--    支付模块nacos注册中心生产者9002    -->
+        <module>springcloud-alibaba-provider-nacos-payment-9002</module>
+        <!--    消费者订单模块nacos注册中心消费者86    -->
+        <module>springcloud-alibaba-consumer-nacos-order-86</module>
+        <!--    nacos注册中心配置3377    -->
+        <module>springcloud-alibaba-config-nacos-3377</module>
+        <!--    sentinel熔断降级服务8401    -->
+        <module>springcloud-alibaba-sentinel-service-8401</module>
+        <!--    支付模块生产者9003    -->
+        <module>springcloud-alibaba-provider-payment-9003</module>
+        <!--    支付模块生产者9004    -->
+        <module>springcloud-alibaba-provider-payment-9004</module>
+        <!--    消费者订单模块sentinel流控消费者87    -->
+        <module>springcloud-alibaba-consumer-sentinel-order-87</module>
+        <!--    seata分布式事务orderService2001    -->
+        <module>springcloud-alibaba-seata-order-service-2001</module>
+        <!--    seata分布式事务storageService2002    -->
+        <module>springcloud-alibaba-seata-storage-service-2002</module>
+        <!--    seata分布式事务accountService2003    -->
+        <module>springcloud-alibaba-seata-account-service-2003</module>
+    </modules>
+
+</project>

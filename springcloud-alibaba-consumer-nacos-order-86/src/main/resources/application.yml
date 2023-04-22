@@ -1,0 +1,15 @@
+
+server:
+  port: 86
+
+spring:
+  application:
+    name: nacos-order-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.2.110:8848
+
+#消费者将要去访问的微服务名称(注册成功进nacos的微服务提供者)
+service-url:
+  nacos-payment-service: http://nacos-payment-provider
